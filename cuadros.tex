@@ -1,0 +1,79 @@
+\usepackage{tcolorbox}
+
+\newcounter{definition}[section]
+
+\renewcommand{\thedefinition}{Definición~\thesection.\arabic{definition}}
+
+\newcounter{example}[section]
+
+\renewcommand{\theexample}{Ejercicio~\thesection.\arabic{example}}
+
+\tcbuselibrary{skins}
+
+\tcbstartrecording\relax
+
+\usepackage{varwidth}
+
+\usetikzlibrary{shadings}
+
+\definecolor{amaverde}{RGB}{212, 255, 0}
+
+
+\newtcolorbox[auto counter,number within=section]{mybox}[2][]{%
+  enhanced,
+  skin=enhancedlast jigsaw,
+  attach boxed title to top left={xshift=-4mm,yshift=-0.5mm},
+  fonttitle=\bfseries\sffamily\color{black},
+  varwidth boxed title=0.7\linewidth,
+  colbacktitle=green!45!white,
+  colframe=cyan!50!black,
+  interior style={top color=green!10!white,bottom color=cyan!10!white},
+  boxed title style={empty,arc=0pt,outer arc=0pt,boxrule=0pt},
+  underlay boxed title={
+    \fill[green!45!white] (title.north west)-- (title.north east)-- +(\tcboxedtitleheight-1mm,-\tcboxedtitleheight+1mm)-- ([xshift=4mm,yshift=0.5mm]frame.north east)-- +(0mm,-1mm)-- (title.south west)-- cycle;
+    \fill[green!45!white!50!black] ([yshift=-0.5mm]frame.north west)-- +(-0.4,0)-- +(0,-0.3)-- cycle;
+    \fill[green!45!white!50!black] ([yshift=-0.5mm]frame.north east)-- +(0,-0.3)-- +(0.4,0)-- cycle;
+  },
+  before upper={\refstepcounter{example}\label{#1}},
+  title=Ejercicio~\thetcbcounter: #2,#1
+}
+
+\newtcolorbox{iteracion}[2][]{enhanced,skin=enhancedlast jigsaw,
+attach boxed title to top left={xshift=-4mm,yshift=-0.5mm},
+fonttitle=\bfseries\sffamily\color{black},varwidth boxed title=0.7\linewidth,
+colbacktitle=amaverde!45!white,colframe=cyan!50!black,
+interior style={top color=amaverde!10!white,bottom color=cyan!10!white},
+boxed title style={empty,arc=0pt,outer arc=0pt,boxrule=0pt},
+underlay boxed title={
+\fill[amaverde!45!white] (title.north west)-- (title.north east)-- +(\tcboxedtitleheight-1mm,-\tcboxedtitleheight+1mm)-- ([xshift=4mm,yshift=0.5mm]frame.north east)-- +(0mm,-1mm)-- (title.south west)-- cycle;
+\fill[amaverde!45!white!50!black] ([yshift=-0.5mm]frame.north west)-- +(-0.4,0)-- +(0,-0.3)-- cycle;
+\fill[amaverde!45!white!50!black] ([yshift=-0.5mm]frame.north east)-- +(0,-0.3)-- +(0.4,0)-- cycle; },
+title={#2},#1}
+
+\newtcolorbox[auto counter,number within=section]{defi}[2][]{%
+  enhanced,
+  skin=enhancedlast jigsaw,
+  attach boxed title to top left={xshift=-4mm,yshift=-0.5mm},
+  fonttitle=\bfseries\sffamily\color{white},
+  varwidth boxed title=0.7\linewidth,
+  colbacktitle=blue!60!black!20!white,
+  colframe=blue!75!black,
+  interior style={
+    top color=blue!5!white,
+    bottom color=blue!12!white
+  },
+  boxed title style={empty,arc=0pt,outer arc=0pt,boxrule=0pt},
+  underlay boxed title={
+    \fill[blue!60!black!20!white]
+      (title.north west)-- (title.north east)--
+      +(\tcboxedtitleheight-1mm,-\tcboxedtitleheight+1mm)--
+      ([xshift=4mm,yshift=0.5mm]frame.north east)-- +(0mm,-1mm)--
+      (title.south west)-- cycle;
+    \fill[blue!80!black]
+      ([yshift=-0.5mm]frame.north west)-- +(-0.4,0)-- +(0,-0.3)-- cycle;
+    \fill[blue!80!black]
+      ([yshift=-0.5mm]frame.north east)-- +(0,-0.3)-- +(0.4,0)-- cycle;
+  },
+  before upper={\refstepcounter{definition}\label{#1}},
+  title=Definición~\thetcbcounter: #2,#1
+}
