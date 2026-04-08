@@ -1,3 +1,68 @@
-hola a todos este es un archivo de .tex
+\section{Probabilidad condicional}
 
-vamos a ver si este fue el que creo esta parte
+\begin{align*}
+    P(A \cap B|C) & = P(A|B \cap C) P(B \cap C) \\
+    \frac{P(A \cap B \cap C)}{P(c)} &= \frac{P(A \cap B \cap C)}{P(B \cap C)} \frac{P(B \cap C)}{P(C)}
+\end{align*}
+
+\begin{align*}
+    P(x_{n+1} & =i_{1}, x_{n+2}= i_{2}, \dots, x_{n+m}= i_{m}|x_{n}=i_{0}) \\
+    & = P(x_{n+2} = i_{2}, x_{n+3} = i_{3}, \dots, x_{n+m}= i_{m}|x_{n+1}= i_{1}, x_{n}=i_{0}) P((x_{n+1}= i_{1}| x_{n}=i_{0}))\\
+    & = P_{i_{0}, i_{1}}(x_{n+2} = i_{2}, \dots, x_{n+m}= i_{m}|x_{n+1}= i_{1}) \\
+    & = P_{i_{0}, i_{1}}P(x_{n+3} = i_{3}, \dots, x_{n+m}= i_{m}|x_{n+2}= i_{2}, x_{n+1}= i_{1}) P((x_{n+2}= i_{2}| x_{n+1}= i_{1}))\\
+    & \quad \vdots \\
+    & = P_{i_{0}, i_{1}} P_{i_{1}, i_{2}} \cdots P_{i_{m-1}, i_{m}}
+\end{align*}
+
+%falta escribir más fórmulas
+
+\begin{defi}{}{}
+Si la probabilidad $P_{ij} > 0$ para algún $n \geq 1$ entonces se dice que $i$ alcanza a $j$. Se denota por $i \to j$.
+\end{defi}
+
+\begin{defi}{}{}
+    Dos estados se comunican si $i \to j$ y $j \to i$. Se denota por $i \leftrightarrow j$.
+\end{defi}
+
+\begin{defi}{}{}
+    Una cadena de Markov es irreducible si todos los estados se comunican entre sí.
+\end{defi}
+
+\begin{defi}{}{}
+    Si $j \leftrightarrow i$ se dice que $j$ es un estado de retorno   
+\end{defi}
+
+\begin{defi}{}{}
+    Una clase de comunicación $E_{j}$ es el conjunto de todos los estados que $j \leftrightarrow k$, $j .k \in E_{j}$
+\end{defi}
+
+\begin{teo}{}{}
+    Si $E_{1}$ y $E_{2}$ son dos clases de comunicación, entonces $E_{1} = E_{2}$ si $E_{1} \cap E_{2} \neq \emptyset$.
+\end{teo}
+
+\begin{nota}[Importante]
+    Una Cadena de Markov se puede dividir en clases de comunicación o de estados de no retorno.
+\end{nota}
+
+\begin{defi}{}{}
+    La perioridad de un estado $i$, es $d(i) = m.c.d\{n: P_{ii}^{(n)} > 0\}$ si $d(i)= 1$ se dice que el estado es aperiódico.
+\end{defi}
+
+\begin{itemize}
+    \item $\{x_{t}\}_{t \in T}$ un proceso estocastico con 
+    \[P(x_{n+1}=j | x_{0}, x_{1}, \dots, x_{n} = i) = P(x_{n+1}=j | x_{n}=i) = P_{ij}\]
+    \item $P=\begin{pmatrix}
+        P_{11} & P_{12} & \dots \\
+        P_{21} & P_{22} & \dots \\
+        \vdots & \vdots & \ddots
+    \end{pmatrix}$
+    Matriz estocastica si $P_{ij} \geq 0$ y $\sum_{i \in E} P_{ij} = 1$
+    \item $P(x_{n+m}=j|x_{n}=i) = (P_{ij})^{(m)} = P_{ij}^{m}$
+    \item $P(x_{n+1}=i_{1}, \dots, x_{n+m}=i_{m}|x_{n}=i_{0})= P_{i_{0}i_{1}}P_{i_{1}i_{2}} \cdots P_{i_{n}i_{m}}$
+    \item $P(x_{0}= i) \quad \forall E_{i}$ Probabilidad inicial.
+    \begin{align*}
+        \prod_{n} & = (P(x_{n}=i_{1}, P(x_{n}=i_{2}), \dots)) \\
+        \prod_{n} & = \prod_{n}P^{n} \\
+        \prod_{n} & = \prod_{n-1}P^{n-1}
+    \end{align*}
+\end{itemize}
