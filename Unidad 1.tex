@@ -65,4 +65,146 @@ Si la probabilidad $P_{ij} > 0$ para algún $n \geq 1$ entonces se dice que $i$ 
         \prod_{n} & = \prod_{n}P^{n} \\
         \prod_{n} & = \prod_{n-1}P^{n-1}
     \end{align*}
+    \item $i \to j$ si $P_{ij}^{n} > 0$ para algún $n$
+    \item $i \leftrightarrow j$ se comunican
+    \item $E_{1}, E_{2}, \dots$ clases de comunicación en las que una cadena de Markov se puede dividir en estados de no retorno
+    %\item $d(i) = m.c.d\{n: P_{ii}^{(n)} > 0\}$ si $d(i)= 1$ se dice que el estado es aperiódico.
 \end{itemize}
+
+\begin{defi}{}{}
+    El tiempo de llegada a un estado j se define como:
+    \[T_{j} = \inf\{n \geq 1 : P_{ij}^{n}>0\}\]
+\end{defi}
+
+\begin{itemize}
+    \item $f_{ij}^{(m)} = f_{ij}^{m} \leq P_{i}(T_{j} = m)$ es la probabilidad de estar en $i$ y llegar a $j$ en \azulr{exactamente} m pasos.
+\end{itemize}
+
+\[
+f_{ij}^{(m)} = \begin{cases}
+    P_{ij} \quad \text{si } m=1 \\
+    \sum_{j \neq k} P_{ik} f_{kj}^{(m-1)} 
+\end{cases}
+\]
+
+\begin{mybox}{}{}
+    Sea $P = \begin{pmatrix}
+        0.7 & 0.3 \\
+        0.4 & 0.6
+    \end{pmatrix}$
+\end{mybox}
+
+Obtener $P_{12}^{2}$ y $f_{12}^{(2)}$
+
+\[
+P^{2} = \begin{pmatrix*}
+    - & \frac{7}{10} \cdot \frac{3}{10} + \frac{3}{10} \cdot \frac{6}{10} = \frac{21+18}{100}\\
+    - & -
+\end{pmatrix*}
+\]
+
+\begin{enumerate}
+    \item $1 \to 2 \to 2$ (0.3)(0.6)
+    \item $1 \to 1 \to 2$ (0.7)(0.3)
+\end{enumerate}
+
+$\f_{12}^{2}$ solo seria 2\)
+
+\begin{align*}
+    f_{ij}^{2} = \sum_{k \neq 2} P_{jk}f_{k2}^{1} = P_{11}f_{12}^{(1)} & = 0.7P_{12} \\
+    & = 0.7(0.3)= \frac{21}{100}
+\end{align*}
+
+\begin{itemize}
+    \item $f_{ij} = P_{i} (T_{j} < \infty) = \sum^{\infty}P_{i}(T_{j}<\infty) = \sum^{\infty}f_{ij}$ es la probabilidad de alcanzar el estado $j$ desde $i$
+\end{itemize}
+
+$M_{ij} =E_{i}(T_{j})$ es el tiempo medio de llegada desde $i$ a $j$ o bien el valor esperado de pasos para llegar a $j$ partiendo desde $i$.
+
+\begin{align*}
+    M_{ij} & = E_{i}(T_{j}) \\
+    & = \sum_{m=0}^{\infty} m f_{ij}^{(m)} \\
+    M_{ij} & = E(T_{j} | x_{0} = i) \\
+    & = \sum_{k \in E} P(x_{1} = k | x_{0} = i) E(T_{j} | x_{1} = k) \\
+    & = P_{ij} + \sum_{j \neq k} P(x_{1} = k | x_{0} = i) E(T_{j} | x_{1} = k) \\
+    & = P_{ij} + \sum_{j \neq k} P(x_{1} = k | x_{0} = i) (1 + E(T_{j} (x_{0} = k))) \\
+    & = P_{ij} + \sum_{j \neq k} P_{ik} (1 + M_{kj}) \\
+    & = P_{ij} + \sum_{j \neq k} P_{ik} + \sum_{j \neq k} P_{ik} M_{kj} \\
+    & = 1 + \sum_{j \neq k} P_{ik} M_{kj}
+\end{align*}
+
+\begin{example}{}{}
+    De la matriz de transición anterior obtener:
+    \begin{enumerate}
+        \item $M_{12}$
+        \item $M_{21}$
+    \end{enumerate}
+\end{example}
+
+\begin{enumerate}
+    \item \begin{align*}
+        M_{12} & = 1 + \sum_{k \neq j} P_{ik} M_{kj} \\
+         & = 1 + P_{11} M_{12} \\
+         & M_{12} (1 - 0.7)= 1 \\
+         & M_{12} = \frac{1}{0.3} = \frac{10}{3}
+    \end{align*}
+\end{enumerate}
+
+\begin{enumerate}
+    \item \begin{align*}
+        M_{11} & = 1 + \sum_{k \neq 1} P_{1k} M_{k1} \\
+        M_{11} & = 1 + P_{12} M_{21} \\
+        M_{21} & = 1 + \sum_{k \neq j}P_{1k}M_{k1} \\
+         & = 1 + P_{22}M_{21} \\
+        & M_{21}(1 - P_{22}) = 1 \\
+        & M_{21} (1 - 0.6) = 1 \\
+        M_{21} & = \frac{1}{0.4} = \frac{10}{4} = \frac{5}{2} \\
+        \rightarrow M_{11} & = 1 + P_{12} M_{21} = 1 + 0.3 \cdot \frac{5}{2} = 1 + \frac{1.5}{2} = 1 + 0.75 = 1.75 = \frac{7}{4}      
+    \end{align*}
+\end{enumerate}
+
+\begin{example}{}{}
+    Se lanza un dado ¿Cuál es su esperanza?
+\end{example}
+
+\[
+E(x) = 1 \cdot \frac{1}{6} + 2 \cdot \frac{1}{6} + 3 \cdot \frac{1}{6} + 4 \cdot \frac{1}{6} + 5 \cdot \frac{1}{6} + 6 \cdot \frac{1}{6} = \frac{21}{6} = 3.5
+\]
+
+\begin{defi}{}{}
+    \begin{enumerate}
+        \item j es recurrente si $P_{j}(T_{j} < \infty) = 1$
+        \item Si no es recurrente se dice que es transitorio. Es decir $P_{j}(T_{j} < \infty) < 1$
+        \item Si j es recurrente y $E_{j} (T_{j}) = \infty$ se dice que $j$ es cero recurrente o recurrente nulo.
+        \item Si j es recurrente y $E_{j}(T_{j}) < \infty$ se dice que j es recurrente positivo.
+    \end{enumerate}
+    \begin{itemize}
+        \item $P_{j}(T_{j} < \infty)$ su complemento es 
+        $P_{j}(T_{j} = \infty) > 0$ si j es transitorio.
+    \end{itemize}
+\end{defi}
+
+\begin{defi}{}{}
+    Sea $\{x_{t}\}_{t \in T}$  una cadena de Markov definamos:
+    \[
+        N_{j} = \sum_{k=1}^{\infty} I\{x_{n} = j\}
+    \]
+    Como el número de llegadas al estado j.
+
+    $P_{i}(N_{j} = m)$ es la probabilidad de iniciar en $i$ y visitar m-veces el estado $j$.
+\end{defi}
+
+%Falta un grafo.
+
+Para una Cadena de Markov definimos al número de llegadas al estado $i$ como:
+
+\[
+N_{j} = \sum_{n=0}^{\infty} I\{x_{n} = i\}
+\]
+
+$P_{i}(N_{j} = m)$ es la probabilidad de iniciar en $i$ y visitar a $j$ m-veces (no significa que contabilicemos las visitas que regrecemos a $i$ y luego visitemos a $j$ sólo es la de iniciar en $i$ y las veces que visitamos a $j$)
+
+\begin{align*}
+    P_{j}(N_{j} \leq m) & = f_{ij}^{m-1} (1 - f_{ij})  \quad m = 1,2,\dots\\
+    f_{ij} & = P_{j} (T_{j} < \infty) 
+\end{align*}
