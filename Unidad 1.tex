@@ -108,7 +108,7 @@ P^{2} = \begin{pmatrix*}
     \item $1 \to 1 \to 2$ (0.7)(0.3)
 \end{enumerate}
 
-$\f_{12}^{2}$ solo seria 2\)
+$f_{12}^{2}$ solo seria 2)
 
 \begin{align*}
     f_{ij}^{2} = \sum_{k \neq 2} P_{jk}f_{k2}^{1} = P_{11}f_{12}^{(1)} & = 0.7P_{12} \\
@@ -196,15 +196,521 @@ E(x) = 1 \cdot \frac{1}{6} + 2 \cdot \frac{1}{6} + 3 \cdot \frac{1}{6} + 4 \cdot
 
 %Falta un grafo.
 
-Para una Cadena de Markov definimos al número de llegadas al estado $i$ como:
+\begin{defi}{}{}
+    Para una Cadena de Markov definimos al número de llegadas al estado $j$ como:
 
-\[
-N_{j} = \sum_{n=0}^{\infty} I\{x_{n} = i\}
-\]
+    \[
+    N_{j} = \sum_{n=0}^{\infty} I\{x_{n} = j\}
+    \]
+\end{defi}
 
 $P_{i}(N_{j} = m)$ es la probabilidad de iniciar en $i$ y visitar a $j$ m-veces (no significa que contabilicemos las visitas que regrecemos a $i$ y luego visitemos a $j$ sólo es la de iniciar en $i$ y las veces que visitamos a $j$)
 
 \begin{align*}
-    P_{j}(N_{j} \leq m) & = f_{ij}^{m-1} (1 - f_{ij})  \quad m = 1,2,\dots\\
-    f_{ij} & = P_{j} (T_{j} < \infty) 
+    P_{j}(N_{j} = m) & = f_{ij}^{m-1} (1 - f_{jj})  \quad m = 1,2,\dots\\
+    f_{jj} & = P_{j} (T_{j} < \infty) 
 \end{align*}
+
+\begin{gather*}
+    j_{1} \\
+    j_{2} - j_{1}  \quad P_{j} (T_{j} < \infty ) = f_{jj} \\
+    j_{3} - j_{2}  \quad P_{j} (T_{j} < \infty ) = f_{jj}\\
+    \vdots \\
+    j_{m} - j_{m-1}  \quad P_{j} (T_{j} < \infty ) = f_{jj} \\
+    P_{i}(T_{j} = \infty) = 1- P_{j}(T_{j} < \infty) = 1 - f_{ij} 
+\end{gather*}
+
+$P_{j}$ tiene una distribución geométrica.
+
+$P_{i} (N_{j} = m) = f_{ij}^{m-1} (1 - f_{jj}) \quad m= 1, 2, \dots$
+
+$P_{i} (N_{j} = 0) = 1 - f_{ij}$
+
+\begin{nota}
+    Si j es recurrente $f_{jj} = P_{j} (T_{j} < \infty) = 1$
+
+    $\Rightarrow P_{j} (N_{j} = m) = 0$ es decir $N_{j} = \infty$
+\end{nota}
+
+%falta un gráfo
+
+Sea $R$ con elemento $ij$ definido por 
+
+\[
+R_{ij} = r_{ij} = E_{i} (N_{j})
+\]
+
+a R se le conoce como matriz potencia.
+
+\begin{align*}
+    E_{i} (N_{j}) & = E_{i} (\sum_{n=0}^{\infty} I \{ x_{n} = j\}) \\
+    & = \sum_{n=0}^{\infty} E_{i} (I \{ x_{n} = j\}) = \sum_{n=0}^{\infty} P_{i}(x_{n} = j) =\sum_{n=0}^{\infty} P_{ij}^{(n)} \\
+    E(I_{A}) & = \int_{A} f(x)dx = P(A) \\
+    R & = I + P + P^{2} + P^{3} + \cdots 
+\end{align*}
+
+\begin{itemize}
+    \item j recurrente
+    \[
+    i \to j \Rightarrow r_{ij} = \infty
+    \]
+    \item $r_{ij}$ = 0 si  $i \not\to j$
+\end{itemize}
+
+\[
+P =
+\begin{pmatrix}
+\fbox{$P_1$} & 0 & \cdots & 0 & 0 \\
+0   & \fbox{$P_2$} & \cdots & 0 & 0 \\
+0   & 0 & \cdots & \fbox{$P_k$} & 0 \\
+\fbox{$L_1$} & \fbox{$L_2$} & \cdots & \fbox{$L_k$} & \fbox{$Q$}
+\end{pmatrix}
+\]
+
+\[
+\begin{array}{cc}
+  P^{*} = \begin{pmatrix} K&0\\L&Q \end{pmatrix} &
+  P^{'2} = \begin{pmatrix} K_{2}&0\\LK + QL& Q^{2} \end{pmatrix} 
+\end{array}
+\]
+
+\[
+    \begin{array}{cc}
+    P^{'3} = \begin{pmatrix} K^{3}&0\\L''&Q{3} \end{pmatrix}  \cdots & 
+    P^{n} = \begin{pmatrix} K^{n}&0\\L^{(n)}&Q{n} \end{pmatrix}
+    \end{array}
+\]
+
+\begin{align*}
+    S & = I + Q + Q^{2} + Q^{3} + \cdots \\
+    QS & = Q + Q^{2} + Q^{3} + Q^{4} + \cdots = SQ \\
+    S & - I = Q + Q^{2} + Q^{3} + Q^{4} + \cdots   
+\end{align*}
+
+\begin{align*}
+QS &= S - I \quad & SQ &= S - I \\
+I &= S - QS \quad & I &= S - SQ \\
+I &= (I - Q)S \quad & I &= S(I - Q) \\
+S &= (I - Q)^{-1}
+\end{align*}
+
+\begin{align*}
+f_{ij} &= p_{ij} + \sum_{k \ne j} p_{ik} f_{kj}
+\end{align*}
+
+\begin{align*}
+P_{i}(N_j = m) &= (1 - f_{jj})(f_{jj})^{m-1}
+\end{align*}
+
+\[
+f_{jj} \ne 1 \;\Rightarrow\; \text{geom.}
+\]
+
+\begin{align*}
+r_{jj} &= \frac{1}{1 - f_{jj}}
+\end{align*}
+
+\begin{align*}
+r_{ij} &= \sum_{m=0}^{\infty} m \, \mathbb{P}_j(N_j = m) \\
+       &= \sum_{m=0}^{\infty} m \, f_{ij}(f_{jj})^{m-1}(1 - f_{jj}) \\
+       &= f_{ij} \sum_{m=0}^{\infty} m \, (f_{jj})^{m-1}(1 - f_{jj}) \\
+       &= f_{ij} \, r_{jj}
+\end{align*}
+
+\section*{Calculemos a $F$}
+
+\begin{itemize}
+\item $i, j$ son recurrentes:
+\begin{align*}
+    i \to j  & \Rightarrow f_{ij} = 1 \\
+    i \not\to j & \Rightarrow f_{ij} = 0
+\end{align*}
+
+\item Si $i$ es recurrente y $j$ transitorio:
+\[
+i \not\to j \Rightarrow f_{ij} = 0
+\]
+
+\item Si $i$ es transitorio y $j$ transitorio:
+\begin{align*}
+    f_{ij} = \frac{r_{ij}}{r_{jj}} & \\
+    1 - f_{jj} = \frac{1}{r_{jj}} & \Rightarrow f_{jj} = 1 - \frac{1}{r_{jj}}
+\end{align*}
+
+\end{itemize}
+
+\begin{teo}{}{}
+    Si $i$ es transitorio y $j, k \in E_{n}$ recurrente $\Rightarrow f_{ij} = f_{ik}$
+\end{teo}
+
+\textbf{Demostración:}
+
+\begin{align*}
+    \i \to j; i \to k & \qquad i \not\to j \Rightarrow f_{ij} = 0 \\
+    i \to j, j \to k \rightarrow i \to & \\
+    f_{ij} f_{jk} < f_{ik} & \\
+    f_{ij} (1) = f_{ik} &
+\end{align*}
+
+\[
+\begin{pmatrix*}
+    1 & 0 & \cdots & 0 & 0 \\
+    0 & 1 & \cdots & 0 & \vdots \\
+    \vdots & \vdots & \ddots & 1 & 0 \\
+    b_{1} & b_{2} & \cdots & b_{k} & Q
+\end{pmatrix*} = \begin{pmatrix}
+    I & 0 \\
+    B & Q
+\end{pmatrix}
+\]
+
+\[
+    \begin{array}{cc}
+    P^{'2} = \begin{pmatrix} I&0\\ B+QB&Q{2} \end{pmatrix} & 
+    P^{'3} = \begin{pmatrix} I&0\\B+QB+Q^{2}B&Q{3} \end{pmatrix}
+    \end{array}
+\]
+
+\begin{align*}
+    P^{n} = \begin{pmatrix}
+        I & 0 \\
+        B_{n} & Q^{n}
+    \end{pmatrix}
+\end{align*}
+
+Donde 
+
+\[
+    B_{n} = B(I + Q + Q^{2} + \cdots + Q^{n-1}) = B(I - Q^{n})(I - Q)^{-1} = \sum_{m=0}^{n-1} Q^{m} B
+\]
+
+$b_{n_{ij}}$ $i$ transitorio y vamos al conjunto $C_{j}$
+
+\begin{align*}
+    b_{n_{ij}} &  = P_{i} (T_{j} < n+1) \\
+    \lim_{n \to \infty} b_{n_{ij}} & = \lim_{n \to \infty} P_{i} (T_{j} < n+1) = P_{i} (T_{j} < n+1)\\
+    \lim_{n \to \infty} B_{n} & = \sum_{m=0}^{n-1} Q^{m} B = SB
+\end{align*}
+
+\begin{align*}
+BS &= S - I \quad & SB &= S - I \\
+I &= S - BS \quad & I &= S - SB \\
+I &= (I - B)S \quad & I &= S(I - B) \\
+S &= (I - B)^{-1}
+\end{align*}
+
+\[
+P =
+\left(
+\begin{array}{ccc:cc:ccc}
+0.4 & 0.3 & 0.3 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0.6 & 0.4 & 0 & 0 & 0 & 0 & 0 \\
+0.5 & 0.5 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\hdashline 
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0.8 & 0.2 & 0 & 0 & 0 \\
+\hdashline 
+0 & 0 & 0 & 0 & 0 & 0.4 & 0.6 & 0 \\
+0.2 & 0.4 & 0 & 0.2 & 0 & 0 & 0 & 0.2 \\
+0.1 & 0 & 0.2 & 0.1 & 0 & 0.6 & 0 & 0 \\
+\end{array}
+\right)
+\]
+
+\begin{align*}
+ E_{a} & = \{1, 2, 3\} \quad \text{son recurrentes} \\
+ E_{b} & = \{4, 5\} \quad \text{son recurrentes} \\
+ E_{a} & = \{6, 7, 8\} \quad \text{son transitorios} \\
+\end{align*}
+
+\[
+r =
+\left(
+\begin{array}{ccc:cc:ccc}
+\infty & \infty & \infty & 0 & 0 & 0 & 0 & 0 \\
+\infty & \infty & \infty & 0 & 0 & 0 & 0 & 0 \\
+\infty & \infty & \infty & 0 & 0 & 0 & 0 & 0 \\
+\hdashline 
+0 & 0 & 0 & \infty & \infty & 0 & 0 & 0 \\
+0 & 0 & 0 & \infty & \infty & 0 & 0 & 0 \\
+\hdashline 
+\infty & \infty & \infty & \infty & \infty & - & - & - \\
+\infty & \infty & \infty & \infty & \infty & - & - & - \\
+\infty & \infty & \infty & \infty & \infty & - & - & - \\
+\end{array}
+\right)
+\]
+
+LO que nos falta calcular de la matriz se llama S y nos queda de la siguiente forma:
+
+\[
+Q =
+\left(
+\begin{array}{ccc}
+0.4 & 0.6 & 0 \\
+0 & 0 & 0.2 \\
+0.6 & 0 & 0 \\
+\end{array}
+\right)
+\]
+
+\[
+I-Q =
+\left(
+\begin{array}{ccc}
+0.6 & -0.6 & 0 \\
+0 & 1 & -0.2 \\
+-0.6 & 0 & 1 \\
+\end{array}
+\right)
+\]
+
+\[
+S= (I-Q)^{-1} =
+\left(
+\begin{array}{ccc}
+\frac{125}{66} & \frac{25}{22} & \frac{5}{22} \\
+\frac{5}{22} & \frac{25}{22} & \frac{5}{22} \\
+\frac{25}{22} & \frac{15}{22} & \frac{25}{22} \\
+\end{array}
+\right)
+\]
+
+\[
+B =
+\left(
+\begin{array}{cc}
+0 & 0 \\
+0.6 & 0.2 \\
+0.3 & 0.1 \\
+\end{array}
+\right)
+\]
+
+\[
+SB =
+\left(
+\begin{array}{cc}
+\frac{3}{4} & \frac{1}{4} \\
+\frac{3}{4} & \frac{1}{4} \\
+\frac{3}{4} & \frac{1}{4} \\
+\end{array}
+\right)
+\]
+
+$f_{66} = 1 - \frac{1}{r_{66}} = 1 - \frac{1}{\frac{125}{66}} = 1 - \frac{66}{125} = \frac{59}{125}$
+
+$f_{76} = \frac{r_{76}}{r_{66}} = \frac{\frac{15}{66}}{\frac{125}{66}} = \frac{15}{125}$
+
+$f_{86} = \frac{r_{86}}{r_{66}} = \frac{\frac{75}{66}}{\frac{125}{66}} = \frac{75}{125}$
+
+$f_{77} = 1 - \frac{r_{77}}{r_{77}} = 1 - \frac{1}{\frac{25}{22}} = 1 - \frac{22}{25} = \frac{3}{25}$
+
+$f_{67} = \frac{r_{67}}{r_{77}} = \frac{\frac{75}{66}}{\frac{75}{66}} = 1$
+
+$f_{87} = \frac{r_{87}}{r_{77}} = \frac{\frac{45}{66}}{\frac{75}{66}} = \frac{45}{75}$
+
+$f_{68} = \frac{r_{68}}{r_{88}} = \frac{\frac{15}{66}}{\frac{75}{66}} = \frac{15}{75}$
+
+$f_{78} = \frac{r_{78}}{r_{88}} = \frac{\frac{15}{66}}{\frac{75}{66}} = \frac{15}{75}$
+
+$f_{88} = 1 - \frac{1}{r_{88}} = 1 - \frac{1}{\frac{75}{66}} = 1 - \frac{66}{75} = \frac{9}{75}$
+
+Y la matriz F nos deda de la forma
+
+\[
+F =
+\left(
+\begin{array}{cccccccc}
+1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 \\
+\frac{3}{4} & \frac{3}{4} & \frac{3}{4} & \frac{1}{4} & \frac{1}{4} & \frac{59}{125} & 1 & \frac{15}{75} \\
+\frac{3}{4} & \frac{3}{4} & \frac{3}{4} & \frac{1}{4} & \frac{1}{4} & \frac{15}{125} & \frac{9}{75} & \frac{15}{75} \\
+\frac{3}{4} & \frac{3}{4} & \frac{3}{4} & \frac{1}{4} & \frac{1}{4} & \frac{75}{125} & \frac{45}{75} & \frac{9}{75} \\
+\end{array}
+\right)
+\]
+
+%resolución de tarea
+
+Una CdeM es \textbf{aperiódica, irreducible, recurrente positiva} $\Leftrightarrow$
+\[
+    \pi = \Pi P \quad \leftarrow \quad P \text{ doblemente estocástica.}
+\]
+\[
+    \sum_{j \in E} \Pi(j) = 1
+\]
+
+
+\begin{example}{}{}\label{ex:ejemplo-cdm}
+    Sea la matriz de transición $P$ con espacio de estados $E = \{0, 1, 2, 3, 4\}$:
+    \[
+    P =
+    \left(
+    \begin{array}{c|ccccc}
+        & 0 & 1 & 2 & 3 & 4 \\\hline
+      0 & 0.2 & 0.1 & 0.3 & 0   & 0.4 \\
+      1 & 0   & 1   & 0   & 0   & 0   \\
+      2 & 0   & 0   & 0.3 & 0.7 & 0   \\
+      3 & 0   & 0   & 0.7 & 0.3 & 0   \\
+      4 & 0.1 & 0   & 0.2 & 0.6 & 0.1 \\
+    \end{array}
+    \right)
+    \]
+    Clasificar $R$, $F$ y $\displaystyle\lim_{n \to \infty} P^{n}$.
+\end{example}
+
+% (El grafo de la cadena va aquí)
+
+\textbf{Clases de comunicación:}
+\begin{align*}
+    E_1 &= \{1\}    & &\text{recurrente, aperiódica.} \\
+    E_2 &= \{2, 3\} & &\text{recurrente, aperiódica.} \\
+    E_0 &= \{0, 4\} & &\text{transitorios, aperiódicos.}
+\end{align*}
+
+
+\[
+\tilde{P} =
+\left(
+\begin{array}{c|ccc:cc}
+    & 1 & 2 & 3 & 4 & 0 \\\hline
+  1 & 1            & 0            & 0            & 0            & 0            \\
+  2 & 0            & \tfrac{3}{10} & \tfrac{7}{10} & 0            & 0            \\
+  3 & 0            & \tfrac{7}{10} & \tfrac{3}{10} & 0            & 0            \\
+  \hdashline
+  4 & 0            & \tfrac{2}{10} & \tfrac{6}{10} & \tfrac{1}{10} & \tfrac{1}{10} \\
+  0 & \tfrac{1}{10} & \tfrac{3}{10} & 0            & \tfrac{4}{10} & \tfrac{2}{10} \\
+\end{array}
+\right)
+\]
+
+
+Sea $R$ con elemento $(i,j)$ definido por $r_{ij} = E_i(N_j)$:
+
+\begin{itemize}
+    \item $j$ \textbf{recurrente}:
+    \begin{align*}
+        i \to j   &\Rightarrow r_{ij} = \infty \\
+        i \not\to j &\Rightarrow r_{ij} = 0
+    \end{align*}
+    \item $j$ \textbf{transitorio}:
+    \begin{align*}
+        i \not\to j &\Rightarrow r_{ij} = 0 \\
+        i \to j   &\Rightarrow r_{ij} = s_{ij} \quad (\text{entradas de } S = (I-Q)^{-1})
+    \end{align*}
+\end{itemize}
+
+\[
+R =
+\left(
+\begin{array}{c|ccc:cc}
+    & 1 & 2 & 3 & 4 & 0 \\\hline
+  1 & \infty & 0       & 0       & 0     & 0     \\
+  2 & 0      & \infty  & \infty  & 0     & 0     \\
+  3 & 0      & \infty  & \infty  & 0     & 0     \\
+  \hdashline
+  4 & \infty & \infty  & \infty  & s_{44} & s_{40} \\
+  0 & \infty & \infty  & \infty  & s_{04} & s_{00} \\
+\end{array}
+\right)
+\]
+
+\[
+Q =
+\left(
+\begin{array}{c|cc}
+    & 4 & 0 \\\hline
+  4 & \tfrac{1}{10} & \tfrac{1}{10} \\
+  0 & \tfrac{4}{10} & \tfrac{2}{10} \\
+\end{array}
+\right)
+\]
+
+\[
+I - Q =
+\left(
+\begin{array}{cc}
+  \tfrac{9}{10}  & -\tfrac{1}{10} \\[4pt]
+  -\tfrac{4}{10} &  \tfrac{8}{10}
+\end{array}
+\right)
+\]
+
+\[
+(I-Q)^{-1} = \frac{1}{\det(I-Q)} \begin{pmatrix} \tfrac{8}{10} & \tfrac{1}{10} \\[4pt] \tfrac{4}{10} & \tfrac{9}{10} \end{pmatrix}
+\]
+
+donde $\det(I-Q) = \dfrac{9}{10}\cdot\dfrac{8}{10} - \dfrac{1}{10}\cdot\dfrac{4}{10} = \dfrac{72}{100} - \dfrac{4}{100} = \dfrac{68}{100}$, por lo tanto:
+
+\[
+S = (I-Q)^{-1} = \frac{100}{68}
+\begin{pmatrix}
+  \tfrac{8}{10} & \tfrac{1}{10} \\[4pt]
+  \tfrac{4}{10} & \tfrac{9}{10}
+\end{pmatrix}
+=
+\begin{pmatrix}
+  \dfrac{80}{68} & \dfrac{10}{68} \\[8pt]
+  \dfrac{40}{68} & \dfrac{90}{68}
+\end{pmatrix}
+\]
+
+\[
+    \begin{array}{cc}
+    B = \begin{pmatrix} 0&\dfrac{8}{10}\\ \dfrac{1}{10}&\dfrac{3}{10} \end{pmatrix} & 
+    SB = \begin{pmatrix} \dfrac{1}{68}&\dfrac{67}{68}\\\dfrac{9}{68}&\dfrac{59}{68} \end{pmatrix}
+    \end{array}
+\]
+
+$f_{ij} = P_{i}(T_{j} < \infty)$
+
+Si $j$ recurrente, $i$ recurrente
+
+\begin{align*}
+    i \to j &\Rightarrow f_{ij} = 1 \\
+    i \not\to j &\Rightarrow f_{ij} = 0
+\end{align*}
+
+Si $j$ es recurrente 
+\begin{enumerate}
+    \item $i$ transitorio
+    \[
+    i \not \to j \Rightarrow f_{ij} = 0
+    \]
+    \item $i$ es transitorio 
+    \[
+    f_{ij} = \dfrac{r_{ij}}{r_{jj}} \quad f_{jj} = 1 -\dfrac{1}{r_{jj}}
+    \]
+\end{enumerate}
+
+$i$ transitorio $j$ recurrente
+
+\[
+f_{ij} = (SB)_{ij} ??
+\]
+
+\begin{align*}
+    f_{44} &= 1 - \frac{1}{r_{44}} = 1 - \frac{68}{80} = \frac{12}{80} \\[6pt]
+    f_{40} &= \frac{r_{40}}{r_{00}} = \frac{\tfrac{10}{68}}{\tfrac{90}{68}} = \frac{10}{90} = \frac{1}{9} \\[6pt]
+    f_{04} &= \frac{r_{04}}{r_{44}} = \frac{\tfrac{40}{68}}{\tfrac{90}{68}} = \frac{40}{90} = \frac{4}{9} \\[6pt]
+    f_{00} &= 1 - \frac{1}{r_{00}} = 1 - \frac{68}{90} = \frac{22}{90}
+\end{align*}
+
+\[
+F =
+\left(
+\begin{array}{c|ccc:cc}
+    & 1 & 2 & 3 & 4 & 0 \\\hline
+  1 & 1              & 0              & 0              & 0              & 0              \\
+  2 & 0              & 1              & 1              & 0              & 0              \\
+  3 & 0              & 1              & 1              & 0              & 0              \\
+  \hdashline
+  4 & \dfrac{1}{68}  & \dfrac{67}{68} & \dfrac{67}{68} & \dfrac{12}{80} & \dfrac{1}{9}   \\[8pt]
+  0 & \dfrac{9}{68}  & \dfrac{59}{68} & \dfrac{59}{68} & \dfrac{4}{9}   & \dfrac{22}{90} \\
+\end{array}
+\right)
+\]
