@@ -1,3 +1,308 @@
+% ══════════════════════════════════════════════
+\section{Procesos Estocásticos}
+% ══════════════════════════════════════════════
+
+\begin{defi}{}{}
+Un \textbf{proceso estocástico} $\{X_t\}_{t \in T}$ es una colección de variables aleatorias indexadas por un parámetro $t$ (usualmente el tiempo), con:
+\begin{itemize}
+    \item $T$ --- espacio paramétrico (tiempo).
+    \item $E$ --- conjunto de valores (espacio de estados).
+\end{itemize}
+\end{defi}
+
+\textbf{Ejemplos:}
+\begin{enumerate}[label=\alph*)]
+    \item $X_t$ representa el $n$-ésimo lanzamiento de un dado.\quad $E=\{1,2,3,\dots,6\}$, $T=\{1,2,\dots,n\}$.
+    \item $X_t$ representa el número de personas que esperan en un banco al instante $t$.\quad $E=\{1,2,\dots,n\}$, $T=(7{:}00,16{:}00)$.
+    \item $X_t$ es el tiempo que tarda un alumno en llegar a la FES Acatlán en cierto día.\quad $E=(0,120)$, $T=\{\text{Lu},\text{Ma},\dots,\text{Vi}\}$.
+    \item $X_t$ es el precio del dólar al final del día.\quad $E=(0,35)$, $T=\{1,2,\dots\}$.
+    \item $X_t$ es el precio de las criptomonedas en algún momento del día.\quad $E=\mathbb{R}^+$, $T=(0,24{:}00)$.
+\end{enumerate}
+
+\begin{center}
+\begin{tabular}{c|cc}
+    $E \,\backslash\, T$ & Discreto & Continuo \\\hline
+    Discreto & a), b) & b), d) \\
+    Continuo & c)     & d), e) \\
+\end{tabular}
+\end{center}
+
+\subsection{Caracterizaciones de un P.E.}
+
+\begin{itemize}
+    \item $E[X_t]$ --- función de media.
+    \item $V[X_t]$ --- función de varianza.
+    \item $\mathrm{Cov}(X_t,X_s)$ --- función de covarianza.
+    \item Función de correlación:
+    \[
+        \rho_{X_tX_s} = \frac{\mathrm{Cov}(X_t,X_s)}{\sqrt{V(X_t)\,V(X_s)}}
+    \]
+\end{itemize}
+
+Sea $\{X_t\}_{t\in T}$ un P.E. que representa el lanzamiento de una moneda ($p=\tfrac{1}{2}$):
+\[
+    P(X_t=0)=1-p,\qquad P(X_t=1)=p.
+\]
+Si $S_n = X_1+X_2+\cdots+X_n$, entonces $\{S_n\}$ contabiliza el número de éxitos:
+\begin{align*}
+    X_t &\sim \mathrm{Ber}(p),\quad E(X_t)=p,\quad V(X_t)=(1-p)p.\\
+    S_n &\sim \mathrm{Bin}(n,p),\quad E(S_n)=np,\quad V(S_n)=np(1-p).
+\end{align*}
+
+\begin{nota}
+\begin{itemize}
+    \item[$\alpha$)] Si un P.E. tiene esperanza que no depende de $t$, se dice \textbf{estable en media}.
+    \item[$\beta$)] Si su varianza no depende de $t$, se dice \textbf{estable en varianza}.
+\end{itemize}
+\end{nota}
+
+\subsection{Estacionariedad}
+
+Un P.E. es \textbf{estrictamente estacionario} si $\{X_{t_1},\dots,X_{t_n}\}$ tiene la misma distribución que $\{X_{t_1+h},\dots,X_{t_n+h}\}$.
+
+\[
+E[X_{t_n}]=E[X_{t_0}]=\cdots=m,\qquad V[X_{t_n}]=V[X_{t_0}]=\cdots=\sigma^2.
+\]
+\[
+\mathrm{Cov}(X_t,X_{t+h})=E[X_tX_{t+h}]-E[X_t]E[X_{t+h}].
+\]
+\[
+t=0\;\Rightarrow\;\mathrm{Cov}(X_0,X_h)=E(X_0X_h)-E(X_0)E(X_h)=f(h).
+\]
+
+Un P.E. es \textbf{débilmente estacionario} si es estable en media y varianza, y además:
+\[
+\mathrm{Cov}(X_t,X_{t+h})=f(h),\qquad \mathrm{Cov}(X_t,X_s)=f(t-s).
+\]
+
+\textbf{Ejemplos:}
+\begin{enumerate}[label=\alph*)]
+    \item $X_t\sim\mathrm{Ber}(p)$: estable en media y varianza. $\mathrm{Cov}(X_t,X_{t+h})=0$. $\{X_t\}$ es débilmente estacionario.
+    \item $S_n\sim\mathrm{Bin}(n,p)$: $E(S_n)=np$ depende de $n$, \emph{no} es débilmente estacionario.
+    \item \textbf{Ruido blanco.} $\{\varepsilon_t\}$ con $E(\varepsilon_t)=0$, $V(\varepsilon_t)=\sigma^2$, no correlacionados:
+    \[
+        \rho(\varepsilon_t,\varepsilon_s)=0\;\Rightarrow\;\mathrm{Cov}(\varepsilon_t,\varepsilon_{t+h})=0=f(h).
+    \]
+\end{enumerate}
+
+\subsection{Procesos estocásticos famosos}
+
+\begin{itemize}
+    \item Proceso de Poisson.
+    \item[\boldmath$\to$] Procesos de Renovación.
+    \item Cadenas de Markov.
+    \item Procesos de Markov.
+    \item Procesos de incrementos independientes.
+    \item Procesos de incrementos independientes estacionarios.
+    \item[\boldmath$\to$] Proceso Gaussiano.\quad $X_t\sim N(\mu_t,\sigma^2_t)$.
+    \item Proceso de Ruido blanco.
+    \item Proceso ergódico.
+    \item[\boldmath$\to$] Series de tiempo.
+\end{itemize}
+
+Un \textbf{proceso de renovación} es aquel donde los tiempos entre cada uno de los sucesos se comportan de forma aleatoria e independiente en cada momento $t$.
+
+% ══════════════════════════════════════════════
+\section{Proceso Bernoulli}
+% ══════════════════════════════════════════════
+
+\begin{defi}{}{}
+Sea $\{X_t\}_{t\in T}$ un P.E. donde $P(X_t=0)=1-p$ (``fracaso'') y $P(X_t=1)=p$ (``éxito''), $t=1,2,\dots$, con $X_1,X_2,\dots$ independientes. Se denomina \textbf{proceso Bernoulli}.
+\end{defi}
+
+\[
+E(X_t)=p,\qquad V(X_t)=p(1-p).
+\]
+
+$N_m=X_1+X_2+\cdots+X_m$ contabiliza los éxitos en $m$ experimentos:
+\[
+N_m\sim\mathrm{Bin}(m,p),\qquad E(N_m)=mp,\qquad V(N_m)=mp(1-p).
+\]
+
+$\{N_n\}$ es un proceso de \textbf{incrementos independientes}:
+\[
+P(N_{n+m}-N_n=k\mid N_1,\dots,N_m)=P(N_{n+m}-N_n=m),\qquad
+N_{n+m}-N_n\sim\mathrm{Bin}(m,p).
+\]
+
+\begin{teo}{}{}
+\[
+P(N_{n+1}=k+1)=p\,P(N_n=k)+(1-p)\,P(N_n=k+1).
+\]
+\end{teo}
+
+\subsection{Tiempos de éxito}
+
+\begin{defi}{}{}
+Los \textbf{tiempos de éxito} $\{T_k\}_{k\in T}$ nos representan el momento en que ocurre el $k$-ésimo éxito.
+\end{defi}
+
+\begin{align*}
+    \{T_k=n\} &\Leftrightarrow \{N_{n-1}=k-1\}\cap\{X_n=1\}\\
+    \{T_k\leq n\} &\Leftrightarrow \{N_n\geq k\}
+\end{align*}
+
+\begin{teo}{}{}
+\begin{align*}
+P(T_k=n) &= P(X_n=1)\,P(N_{n-1}=k-1) \\
+           &= p\binom{n-1}{k-1}p^{k-1}(1-p)^{n-k} \\
+           &= \binom{n-1}{k-1}p^k(1-p)^{n-k}.
+\end{align*}
+Los tiempos entre llegadas: $T_k-T_{k-1}\sim\mathrm{Geom}(p)$, independientes entre sí.
+\end{teo}
+
+\begin{teo}{}{}
+\[
+P(T_k=n\mid T_1,T_2,\dots,T_{k-1})=P(T_k=n\mid T_{k-1}),\qquad
+T_k-T_{k-1}\sim\mathrm{Geom}(p).
+\]
+\end{teo}
+
+\subsection{Distribuciones relacionadas}
+
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{Geométrica.} $X=0,1,2,\dots$ es el número de fracasos antes del primer éxito:
+    \[P(X=x)=p(1-p)^x.\]
+
+    \item \textbf{Binomial negativa.} Número de repeticiones hasta el primer éxito:
+    \[f(x;p)=p(1-p)^{x-1},\qquad x=1,2,3,\dots\]
+\end{enumerate}
+
+\[
+P(T_k\leq n)=P(N_n\geq k)=\sum_{i=k}^{n}\binom{n}{i}p^i(1-p)^{n-i}
+=1-\sum_{i=0}^{k-1}\binom{n}{i}p^i(1-p)^{n-i}.
+\]
+
+% ══════════════════════════════════════════════
+\section{Proceso Poisson}
+% ══════════════════════════════════════════════
+
+\begin{defi}{}{}
+Un proceso estocástico $\{N_t\}_{t\geq 0}$ es un \textbf{proceso de conteo} si $t\in\mathbb{R}^+$ y $N_t$ representa el número de eventos hasta el momento $t$.
+\begin{itemize}
+    \item $N_t-N_s$ = número de eventos en $(s,t]$, para $t>s$.
+    \item $N_t\geq N_s$ si $t\geq s$.
+    \item $N_t$ toma valores enteros.
+\end{itemize}
+\end{defi}
+
+\begin{defi}{}{}
+$\{N_t\}_{t\geq 0}$ es un \textbf{proceso Poisson con parámetro $\lambda$} si:
+\begin{enumerate}
+    \item $P[N(t,t+h)=0]=1-\lambda h+o(h)$
+    \item $P[N(t,t+h)=1]=\lambda h+o(h)$
+    \item $P[N(t,t+h)\geq 2]=o(h)$
+    \item Para todo $t,h>0$: $N(t,t+h)$ es independiente de $\{N_u:u\leq t\}$.
+    \item $\{N_t\}$ tiene incrementos independientes y estacionarios.
+\end{enumerate}
+donde $\displaystyle\lim_{h\to 0}\frac{o(h)}{h}=0$.
+\end{defi}
+
+\begin{nota}
+$N(t,t+h)=N_{t+h}-N_t$ son los eventos que llegan en $[t,t+h]$.
+\end{nota}
+
+\begin{itemize}
+    \item $T_n\sim\mathrm{Gamma}(n,\lambda)$:\quad $E[T_n]=\dfrac{n}{\lambda}$,\quad $V[T_n]=\dfrac{n}{\lambda^2}$.
+    \item $T_i-T_{i-1}\sim\mathrm{Exp}(\lambda)$:\quad $E[T_i-T_{i-1}]=\dfrac{1}{\lambda}$,\quad $V[T_i-T_{i-1}]=\dfrac{1}{\lambda^2}$.
+    \item $N_t\sim\mathrm{Poisson}(\lambda t)$:\quad $E[N_t]=\lambda t$,\quad $V[N_t]=\lambda t$.
+    \item $E\!\left(\dfrac{N_t}{t}\right)=\lambda$ --- \textbf{intensidad de llegada}.
+    \item $N_{t+s}-N_t\sim\mathrm{Poisson}(\lambda s)$;\quad $N_s\sim\mathrm{Poisson}(s\lambda)$.
+\end{itemize}
+
+\begin{teo}{}{}
+Sea $\{L_t\}$ un proceso Poisson$(\lambda)$ y $\{M_t\}$ Poisson$(\mu)$, independientes. Entonces $N_t=L_t+M_t$ es Poisson$(\lambda+\mu)$.
+\end{teo}
+
+\begin{teo}{}{}
+Sea $\{N_t\}$ un proceso Poisson$(\lambda)$ y $\sum_{i=1}^{k}p_i=1$, con $0\leq p_i\leq 1$. Entonces $p_iN_t$ es Poisson$(p_i\lambda)$ para todo $i$.
+\end{teo}
+
+\subsection{Proceso Poisson Compuesto}
+
+\[S_t=\sum_{i=1}^{N_t}X_i\]
+
+$\{N_t\}$ es Poisson$(\lambda)$; las $X_i$ son v.a.\ discretas i.i.d., independientes de $N_t$.
+
+\subsubsection*{Ejemplo}
+
+Sea $S$ Poisson compuesto con $N\sim\mathrm{Poisson}(3)$ y:
+\[
+f_1=P(X=1)=\tfrac{1}{2},\quad f_2=P(X=2)=\tfrac{1}{4},\quad f_3=P(X=3)=\tfrac{1}{4}.
+\]
+Clase $(a,b,0)$ con $a=0$, $b=3$:
+\[
+\frac{p_k}{p_{k-1}}=\frac{\lambda}{k},\qquad f(x,\lambda)=\frac{e^{-\lambda}\lambda^x}{x!}.
+\]
+\begin{align*}
+g_0&=P(S=0)=e^{-3}.\\
+g_1&=P(S=1)=3f_1g_0=\tfrac{3}{2}e^{-3}.\\
+g_2&=P(S=2)=\tfrac{3}{2}f_1g_1+3f_2g_0=\tfrac{9}{8}e^{-3}+\tfrac{3}{4}e^{-3}=\tfrac{15}{8}e^{-3}.
+\end{align*}
+
+% ══════════════════════════════════════════════
+\section{Cadenas de Markov --- Definición}
+% ══════════════════════════════════════════════
+
+\begin{defi}{}{}
+Un P.E. $\{X_t\}_{t\in T}$ con espacio paramétrico discreto y $E$ discreto que cumple:
+\[
+P(X_{n+1}=j\mid X_0,X_1,\dots,X_n=i)=P(X_{n+1}=j\mid X_n=i)=P_{ij}
+\]
+es una \textbf{Cadena de Markov (CdeM)}.
+\end{defi}
+
+\begin{nota}
+\begin{itemize}
+    \item La condición anterior se denomina \textbf{propiedad de Markov}.
+    \item $P_{ij}$ es la probabilidad de pasar del estado $i$ al estado $j$ en un paso.
+    \item Solo importa el ``último'' estado conocido para predecir el futuro.
+\end{itemize}
+\end{nota}
+
+Las CdeM que veremos son \textbf{homogéneas}:
+\[
+P(X_{n+1}=j\mid X_n=i)=P(X_{m+1}=j\mid X_m=i)=P_{ij}\qquad\forall\,n\neq m.
+\]
+
+Sea $E=\{1,2,\dots,k\}$:
+\[
+P=\begin{pmatrix}
+P_{11}&P_{12}&\cdots&P_{1k}\\
+P_{21}&P_{22}&\cdots&P_{2k}\\
+\vdots& &\ddots&\vdots\\
+P_{k1}&P_{k2}&\cdots&P_{kk}
+\end{pmatrix},\qquad
+\sum_{j\in E}P_{ij}=1,\quad 0\leq P_{ij}\leq 1.
+\]
+
+Si además $\sum_{i\in E}P_{ij}=1$, la matriz es \textbf{doblemente estocástica}.
+
+\subsection{Ejemplo: Ruina del jugador}
+
+Un apostador tiene $\$N$, gana una unidad con prob.\ $p$ y pierde \$1 con prob.\ $1{-}p$; termina si se queda sin dinero o duplica su capital.
+
+% (El grafo de estados 0,1,...,N,...,2N con 0 y 2N absorbentes se omitió)
+
+\begin{align*}
+    P(X_n=i+1\mid X_{n-1}=i)&=p\\
+    P(X_n=i-1\mid X_{n-1}=i)&=1-p\\
+    P(X_n=0\mid X_{n-1}=0)&=1\\
+    P(X_n=2N\mid X_{n-1}=2N)&=1
+\end{align*}
+
+$S_n=X_1+X_2+\cdots+X_n$ también es CdeM. $P(S_{n+1}=j\mid S_n=i)=P_{j-i}$, con matriz de transición:
+
+\[
+\begin{array}{c|cccccccc}
+S_n\;\backslash\; S_{n+1} & 0 & 1 & 2 & 3 & \cdots & k & k{+}1 & k{+}2\\\hline
+0 & p_0&p_1&p_2&p_3&\cdots&p_k&0&0\\
+1 & 0&p_0&p_1&p_2&\cdots&p_{k-1}&p_k&0\\
+2 & 0&0&p_0&p_1&\cdots&p_{k-2}&p_{k-1}&p_k\\
+3 & 0&0&0&p_0&\cdots&p_{k-3}&p_{k-2}&p_{k-1}\\
+\end{array}
+\]
+
 \section{Probabilidad condicional}
 
 \begin{align*}
